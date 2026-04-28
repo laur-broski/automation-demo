@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
       - name: Run Semantic Release
         run: |
-          npm install -g semantic-release @semantic-release/github
+          npm install -g semantic-release @semantic-release/git @semantic-release/github
           semantic-release
         env:
           # This is the built-in token provided by GitHub Actions
