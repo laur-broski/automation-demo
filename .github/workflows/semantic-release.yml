@@ -15,15 +15,22 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Use your PAT here so that subsequent pushes are recognized as "yours"
+          token: ${{ secrets.MY_PAT }}
+          persist-credentials: true # Important: Allows the PAT to be used
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - name: Run Semantic Release
         run: |
           npm install -g semantic-release @semantic-release/git @semantic-release/github
           semantic-release
         env:
           # This is the built-in token provided by GitHub Actions
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_PAT }}
