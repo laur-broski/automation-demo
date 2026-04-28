@@ -1,1 +1,1 @@
-This a feat breaking change for v2.0.0
+This a feat breaking change for v2.0.0!
