@@ -2,8 +2,7 @@ name: Docker Publish
 on:
   push:
     tags:
-      - 'v*.*.*'
-  workflow_dispatch: # Add this to trigger manually
+      - '*'
 
 permissions:
   contents: read
