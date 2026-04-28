@@ -48,7 +48,7 @@ This is a sample Book API service built with Spring Boot that demonstrates:
 1. Create a `docker-compose.yml` file in the project root:
    ```yaml
    version: '3.8'
-   
+
    services:
      app:
        build: .
@@ -63,7 +63,7 @@ This is a sample Book API service built with Spring Boot that demonstrates:
          - DB_NAME=bookdb
          - DB_USER=postgres
          - DB_PASSWORD=postgres
-     
+
      postgres:
        image: postgres:13.3
        ports:
@@ -74,7 +74,7 @@ This is a sample Book API service built with Spring Boot that demonstrates:
          - POSTGRES_PASSWORD=postgres
        volumes:
          - postgres-data:/var/lib/postgresql/data
-   
+
    volumes:
      postgres-data:
    ```

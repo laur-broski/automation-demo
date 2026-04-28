@@ -11,10 +11,10 @@ resource "google_service_account" "github_actions" {
 resource "google_project_service" "enable_service_usage" {
   project = var.project_id
   service = "serviceusage.googleapis.com"
-  
+
   # Do not disable the API on destroy
   disable_on_destroy = false
-  
+
   # Skip the initial check for API enablement
   # This is necessary since we're enabling the API that would perform the check
   provisioner "local-exec" {
@@ -25,7 +25,7 @@ resource "google_project_service" "enable_service_usage" {
 # First, assign the Service Usage Admin role
 resource "google_project_iam_member" "service_usage_admin" {
   depends_on = [google_project_service.enable_service_usage]
-  
+
   project = var.project_id
   role    = "roles/serviceusage.serviceUsageAdmin"
   member  = "serviceAccount:${google_service_account.github_actions.email}"
@@ -37,17 +37,17 @@ resource "google_project_service" "required_apis" {
     google_project_iam_member.service_usage_admin,
     google_project_service.enable_service_usage
   ]
-  
+
   for_each = toset([
     "artifactregistry.googleapis.com",
     "run.googleapis.com",
     "iam.googleapis.com",
     "cloudresourcemanager.googleapis.com"
   ])
-  
+
   project = var.project_id
   service = each.value
-  
+
   disable_dependent_services = false
   disable_on_destroy        = false
 }
@@ -55,7 +55,7 @@ resource "google_project_service" "required_apis" {
 # Create Artifact Registry Repository
 resource "google_artifact_registry_repository" "app_repository" {
   depends_on = [google_project_service.required_apis]
-  
+
   project       = var.project_id
   location      = var.region
   repository_id = "spring-boot-api"
@@ -66,7 +66,7 @@ resource "google_artifact_registry_repository" "app_repository" {
 # Assign remaining required roles
 resource "google_project_iam_member" "service_account_roles" {
   depends_on = [google_project_service.required_apis]
-  
+
   for_each = toset([
     "roles/run.admin",                # Manage Cloud Run services
     "roles/artifactregistry.writer",  # Push to Artifact Registry
@@ -75,7 +75,7 @@ resource "google_project_iam_member" "service_account_roles" {
     "roles/iam.serviceAccountAdmin",  # Create and manage service accounts
     "roles/resourcemanager.projectIamAdmin"  # Manage project IAM bindings
   ])
-  
+
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.github_actions.email}"
@@ -84,12 +84,12 @@ resource "google_project_iam_member" "service_account_roles" {
 # Additional environment-specific roles
 resource "google_project_iam_member" "environment_specific_roles" {
   depends_on = [google_project_service.required_apis]
-  
+
   for_each = var.environment == "production" ? toset([
     "roles/monitoring.viewer",    # View monitoring in production
     "roles/logging.viewer"        # View logs in production
   ]) : toset([])
-  
+
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.github_actions.email}"
