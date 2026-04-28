@@ -7,7 +7,7 @@ const config = {
       "assets": ["dist/*.js", "dist/*.js.map"],
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
     }],
-    '@semantic-release/gitlab'
+    '@semantic-release/gihub'
   ]
 };
 
