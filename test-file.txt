@@ -1,1 +1,1 @@
-This a feat for v1.1.0
+This a feat for v1.2.0
