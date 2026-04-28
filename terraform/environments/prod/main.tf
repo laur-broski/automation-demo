@@ -5,11 +5,11 @@ module "spring_boot_api" {
   region      = var.region
   service_name = var.service_name
   environment = var.environment
-  
+
   # Production-specific resource allocations
   cpu    = "2"
   memory = "1Gi"
-  
+
   # Production-specific environment variables
   env_variables = {
     LOG_LEVEL = "WARN"

@@ -34,19 +34,19 @@ resource "google_cloud_run_service" "spring_boot_api" {
     spec {
       containers {
         image = "${var.region}-docker.pkg.dev/${var.project_id}/spring-boot-api/${var.service_name}:latest"
-        
+
         resources {
           limits = {
             cpu    = var.cpu
             memory = var.memory
           }
         }
-        
+
         env {
           name  = "SPRING_PROFILES_ACTIVE"
           value = var.environment
         }
-        
+
         # Environment-specific env variables
         dynamic "env" {
           for_each = var.env_variables

@@ -6,7 +6,7 @@ provider "google" {
 # Service account for development environment
 module "github_actions_dev" {
   source = "../modules/github-actions-sa"
-  
+
   project_id        = var.dev_project_id
   environment       = "development"
   service_account_id = "github-actions-sa"
@@ -15,7 +15,7 @@ module "github_actions_dev" {
 # Service account for staging environment
 module "github_actions_staging" {
   source = "../modules/github-actions-sa"
-  
+
   project_id        = var.staging_project_id
   environment       = "staging"
   service_account_id = "github-actions-sa"
@@ -24,7 +24,7 @@ module "github_actions_staging" {
 # Service account for production environment
 module "github_actions_prod" {
   source = "../modules/github-actions-sa"
-  
+
   project_id        = var.prod_project_id
   environment       = "production"
   service_account_id = "github-actions-sa"

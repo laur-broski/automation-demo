@@ -5,11 +5,11 @@ module "spring_boot_api" {
   region      = var.region
   service_name = var.service_name
   environment = var.environment
-  
+
   # Dev-specific resource allocations
   cpu    = "1"
   memory = "512Mi"
-  
+
   # Dev-specific environment variables
   env_variables = {
     LOG_LEVEL = "DEBUG"

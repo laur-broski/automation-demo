@@ -5,11 +5,11 @@ module "spring_boot_api" {
   region      = var.region
   service_name = var.service_name
   environment = var.environment
-  
+
   # Staging-specific resource allocations
   cpu    = "1"
   memory = "768Mi"
-  
+
   # Staging-specific environment variables
   env_variables = {
     LOG_LEVEL = "INFO"
